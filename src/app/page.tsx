@@ -70,48 +70,48 @@ export default function Home() {
     setIsLoading(true);
 
 
-    // Mock response logic
-    setTimeout(() => {
-      const mockResponse = getMockResponse(input.trim());
-      setMessages([...newMessages, { role: 'assistant', content: mockResponse }]);
-      setIsLoading(false);
-    }, 1000); // Simulate a delay for the mock response
+    // // Mock response logic
+    // setTimeout(() => {
+    //   const mockResponse = getMockResponse(input.trim());
+    //   setMessages([...newMessages, { role: 'assistant', content: mockResponse }]);
+    //   setIsLoading(false);
+    // }, 1000); // Simulate a delay for the mock response
 
     // Actual API call logic    
-    // try {
-    //   console.log('Sending messages to API:', newMessages);
+    try {
+      console.log('Sending messages to API:', newMessages);
 
-    //   const res = await fetch('/api/chat', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ messages: newMessages }),
-    //   });
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: newMessages }),
+      });
 
-    //   console.log('Response status:', res.status);
+      console.log('Response status:', res.status);
 
-    //   if (!res.ok) {
-    //     const errorText = await res.text();
-    //     console.error('Response error:', errorText);
-    //     throw new Error(`HTTP error! status: ${res.status}`);
-    //   }
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error('Response error:', errorText);
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
 
-    //   const data = await res.json();
-    //   console.log('API response:', data);
+      const data = await res.json();
+      console.log('API response:', data);
 
-    //   if (data.error) {
-    //     setMessages([...newMessages, { role: 'assistant', content: `Error: ${data.error}` }]);
-    //   } else {
-    //     setMessages([...newMessages, { role: 'assistant', content: data.response }]);
-    //   }
-    // } catch (error) {
-    //   console.error('Failed to get response:', error);
-    //   setMessages([...newMessages, { role: 'assistant', content: 'Sorry, I encountered an error. Please try again.' }]);
-    // } finally {
-    //   setIsLoading(false);
+      if (data.error) {
+        setMessages([...newMessages, { role: 'assistant', content: `Error: ${data.error}` }]);
+      } else {
+        setMessages([...newMessages, { role: 'assistant', content: data.response }]);
+      }
+    } catch (error) {
+      console.error('Failed to get response:', error);
+      setMessages([...newMessages, { role: 'assistant', content: 'Sorry, I encountered an error. Please try again.' }]);
+    } finally {
+      setIsLoading(false);
 
-    //   // Refocus the input box after submission
-    //   inputRef.current?.focus();
-    // }
+      // Refocus the input box after submission
+      inputRef.current?.focus();
+    }
     
   };
 
