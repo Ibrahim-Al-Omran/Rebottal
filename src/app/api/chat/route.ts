@@ -19,7 +19,6 @@ export async function POST(req: NextRequest) {
         model: 'llama3-70b-8192', 
         messages: messages,
         temperature: 0.7,
-        max_tokens:100,
       }),
     });
 

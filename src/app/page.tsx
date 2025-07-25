@@ -118,7 +118,7 @@ export default function Home() {
   return (
     <main className="p-4 max-w-xl mx-auto pb-20 relative">
       <h1 className="text-xl font-bold mb-4">Rebottal</h1>
-      <div className="text-sm">A project by Ibrahim Al Omran</div>
+      <div className="text-sm pb-4">A project by Ibrahim Al Omran</div>
 
       {/* Background text - always rendered for smooth fade */}
       <div
