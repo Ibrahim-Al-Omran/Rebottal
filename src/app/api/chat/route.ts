@@ -4,14 +4,15 @@ export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json();
 
-    if (!process.env.GROQ_API_KEY) {
-      return NextResponse.json({ error: 'GROQ API key not configured' }, { status: 500 });
+    const groqApiKey = process.env.GROQ_API_KEY;
+    if (!groqApiKey) {
+      return new Response(JSON.stringify({ error: 'GROQ API key not configured' }), { status: 500 });
     }
 
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
+        'Authorization': `Bearer ${groqApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -33,8 +34,8 @@ export async function POST(req: NextRequest) {
       response: data.choices[0].message.content,
     });
 
-  } catch (error: any) {
-    console.error('Groq API error:', error.message || error);
+  } catch (error: unknown) {
+    console.error('Groq API error:', (error as Error).message || error);
     return NextResponse.json({ error: 'Failed to get response from Groq' }, { status: 500 });
   }
 }

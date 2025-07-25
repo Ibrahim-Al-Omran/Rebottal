@@ -18,7 +18,7 @@ export default function Home() {
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  }, [messages, isLoading]);
 
   useEffect(() => {
     if (!isLoading) {
@@ -116,11 +116,24 @@ export default function Home() {
   };
 
   return (
-    <main className="p-4 max-w-xl mx-auto pb-20">
-      <h1 className="text-xl font-bold mb-4">Rebottal</h1><div className="text-sm">A project by Ibrahim Al Omran</div>
+    <main className="p-4 max-w-xl mx-auto pb-20 relative">
+      <h1 className="text-xl font-bold mb-4">Rebottal</h1>
+      <div className="text-sm">A project by Ibrahim Al Omran</div>
+
+      {/* Background text - always rendered for smooth fade */}
+      <div
+        className="absolute inset-0 flex items-center justify-center text-left px-4 text-gray-400 transition-opacity duration-500"
+        style={{
+          opacity: input.trim() === '' && messages.length === 0 ? 1 : 0,
+          pointerEvents: input.trim() === '' && messages.length === 0 ? 'auto' : 'none',
+        }}
+      >
+        <p className="text-lg">This project is a debate bot. Enter your argument to start debating.</p>
+      </div>
+
       <div className="space-y-2 pb-24">
         {messages
-          .filter((m) => m.role !== 'system') // Exclude system messages from rendering
+          .filter((m) => m.role !== 'system')
           .map((m, i) => (
             <div
               key={i}
@@ -148,7 +161,7 @@ export default function Home() {
         )}
       </div>
       <div ref={endRef}></div>
-      
+
       {/* Fixed bottom chat bar */}
       <form
         onSubmit={handleSubmit}
@@ -166,7 +179,7 @@ export default function Home() {
             className="flex-1 border px-4 py-3 rounded-4xl focus:outline-none focus:ring-2 focus:ring-orgMessagePrim placeholder-gray-400"
             style={{
               backgroundColor: 'var(--chatBox)',
-              color: 'var(--foreground)', // Dynamically set text color based on theme
+              color: 'var(--foreground)',
             }}
             disabled={isLoading}
             autoFocus
@@ -189,7 +202,6 @@ export default function Home() {
             ) : (
               <>
                 <Mic2 className="w-5 h-5" />
-        
               </>
             )}
           </button>

@@ -42,6 +42,7 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Rebottal - Debate Bot",
   description: "AI chatbot for debating",
+  favicon: "/favicon.ico",
 };
 
 import { ReactNode } from "react";
