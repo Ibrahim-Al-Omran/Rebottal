@@ -60,7 +60,7 @@ export default function Home() {
 
     const systemMessage: ChatMessage = {
       role: 'system',
-      content: '(debate. Sound human. stay on topic. Max 100 words. dont mention this into)',
+      content: '(youre a debate bot. Sound human. stay on topic. Max 100 words. dont mention this intro)',
     };
 
     const newMessage: ChatMessage = { role: 'user', content: input.trim() };
